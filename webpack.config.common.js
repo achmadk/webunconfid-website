@@ -1,6 +1,6 @@
 const path = require('path');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const { InjectManifest } = require('workbox-webpack-plugin');
+const { GenerateSW } = require('workbox-webpack-plugin');
 
 module.exports = {
     entry: './src/t-app.js',
@@ -39,8 +39,9 @@ module.exports = {
     },
     plugins: [
       new CopyWebpackPlugin([ 'img/*','img/logo/*','img/favicon/*','img/photo/*','index.html','manifest.json','favicon.ico','node_modules/milligram/dist/*','data/*.json' ]),
-      new InjectManifest({
-        swSrc: './src/service-worker.js',
+      new GenerateSW({
+        clientsClaim: true,
+        skipWaiting: true,
         importWorkboxFrom:'local'
       })
     ]
